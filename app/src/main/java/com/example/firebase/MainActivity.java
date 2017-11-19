@@ -2,10 +2,12 @@ package com.example.firebase;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView textViewSignin;
+    private Button signInButton;
 
     private ProgressDialog progressDialog;
 
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
 
+        signInButton = (Button) findViewById(R.id.signInButton);
+
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
@@ -55,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         buttonRegister.setOnClickListener(this);
-        textViewSignin.setOnClickListener(this);
+        signInButton.setOnClickListener(this);
     }
 
     private void registerUser(){
@@ -78,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         // if validations are okay
         // show progress dialog while registering user
+        Log.w("Testing", "Outside conCompleteListener");
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
 
@@ -86,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
-
                         if(task.isSuccessful()){
 
                             //user is successfully Registered and logged in
@@ -113,9 +117,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             registerUser();
         }
 
-        if(view == textViewSignin){
-
-            // will open login activity here
+        if(view == signInButton){
+            Intent intent = new Intent(MainActivity.this, Login.class);
+            startActivity(intent);
         }
     }
 
@@ -140,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onClick(View v) {
-
+                
             }
         });
         registerButton = (Button) findViewById(R.id.registerButton);
