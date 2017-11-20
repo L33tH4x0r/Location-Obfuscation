@@ -7,29 +7,42 @@
     tools:context=".Login">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="259dp"
+        android:layout_height="142dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.341">
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/emailField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Email"
             android:inputType="textEmailAddress" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/passwordField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="Password"
             android:inputType="textPassword" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/signInButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:elevation="0dp"
+            android:text="Sign in" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
