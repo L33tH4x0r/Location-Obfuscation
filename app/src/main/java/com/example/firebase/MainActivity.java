@@ -29,11 +29,14 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    private  Button buttonRegister;
+    private Button buttonRegister;
+    private Button signInButton;
+
     private EditText editTextEmail;
     private EditText editTextPassword;
+    private EditText confirmationField;
+
     private TextView textViewSignin;
-    private Button signInButton;
 
     private ProgressDialog progressDialog;
 
@@ -50,11 +53,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog = new ProgressDialog(this);
 
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
-
         signInButton = (Button) findViewById(R.id.signInButton);
+
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        confirmationField = (EditText) findViewById(R.id.confirmationField);
 
         textViewSignin = (TextView) findViewById(R.id.textViewSignin);
 
@@ -63,50 +67,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signInButton.setOnClickListener(this);
     }
 
-    private void registerUser(){
+    private void registerUser() {
         String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String confirmation = confirmationField.getText().toString().trim();
 
-        if(TextUtils.isEmpty(email)){
+        if (TextUtils.isEmpty(email)) {
             // email is empty, can't go any further
             Toast.makeText(this, "Please enter email", Toast.LENGTH_SHORT).show();
-
-            // stop function execution
-            return;
-        }
-        if(TextUtils.isEmpty(password)){
+        } else if (TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmation)) {
             // password is empty, can't go any further
             Toast.makeText(this, "Please enter password", Toast.LENGTH_SHORT).show();
+        }else if (!password.equals(confirmation) ){
+            Toast.makeText(this, "Password and confirmation don't match", Toast.LENGTH_SHORT).show();
+        }else if (password.length() < 8){
+            Toast.makeText(this, "Password needs to be at least 8 characters", Toast.LENGTH_SHORT).show();
+        }else{
+            // if validations are okay
+            // show progress dialog while registering user
+            Log.w("Testing", "Outside conCompleteListener");
+            progressDialog.setMessage("Registering User...");
+            progressDialog.show();
 
-            // stop function execution
-            return;
+
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+
+                                //user is successfully Registered and logged in
+                                // we'll start the profile activity here
+                                // temporary toast display
+                                progressDialog.dismiss();
+                                Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, Login.class);
+                                startActivity(intent);
+
+                            } else {
+                                // Registration attempt failed
+                                progressDialog.dismiss();
+                                Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });
         }
-        // if validations are okay
-        // show progress dialog while registering user
-        Log.w("Testing", "Outside conCompleteListener");
-        progressDialog.setMessage("Registering User...");
-        progressDialog.show();
-
-
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-
-                            //user is successfully Registered and logged in
-                            // we'll start the profile activity here
-                            // temporary toast display
-                            Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-
-                        }
-                        else{
-                            // Registration attempt failed
-                            Toast.makeText(MainActivity.this, "Registration failed", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
     }
 
     @Override

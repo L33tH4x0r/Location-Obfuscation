@@ -19,13 +19,19 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity implements View.OnClickListener {
     private Button signInButton;
+    private Button forgotButton;
+
     private EditText emailField;
     private EditText passwordField;
+
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
+
     private String emailResponse;
     private String passwordResponse;
+
     private Uri uriUrl;
+
     private Intent launchBrowser;
 
     @Override
@@ -36,6 +42,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         currentUser = firebaseAuth.getCurrentUser();
 
         signInButton = (Button) findViewById(R.id.signInButton);
+        forgotButton = (Button) findViewById(R.id.forgotButton);
 
         emailField = (EditText) findViewById(R.id.emailField);
         passwordField = (EditText) findViewById(R.id.passwordField);
@@ -44,11 +51,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
 
         signInButton.setOnClickListener(this);
+        forgotButton.setOnClickListener(this);
     }
 
     public void onClick(View view){
         if(view == signInButton){
             signInUser();
+        }
+        if (view == forgotButton){
+            Intent intent = new Intent(Login.this, ForgotPassword.class);
+            startActivity(intent);
         }
     }
     public void signInUser(){
@@ -81,4 +93,5 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             }
         }
     }
+
 }

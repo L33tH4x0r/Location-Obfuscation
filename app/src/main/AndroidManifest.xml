@@ -21,7 +21,10 @@
         <activity android:name=".Registration" />
         <activity
             android:name=".Login"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ForgotPassword"
+            android:label="@string/title_activity_forgot_password"></activity>
     </application>
 
 </manifest>
