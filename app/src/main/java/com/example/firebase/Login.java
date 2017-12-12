@@ -48,7 +48,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         passwordField = (EditText) findViewById(R.id.passwordField);
 
         uriUrl = Uri.parse("http://unr.edu/");
-        launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+        launchBrowser = new Intent(Login.this, Map.class);
 
         signInButton.setOnClickListener(this);
         forgotButton.setOnClickListener(this);

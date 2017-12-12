@@ -3,6 +3,8 @@
     package="com.example.firebase">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +26,8 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".ForgotPassword"
-            android:label="@string/title_activity_forgot_password"></activity>
+            android:label="@string/title_activity_forgot_password" />
+        <activity android:name=".Map"></activity>
     </application>
 
 </manifest>
