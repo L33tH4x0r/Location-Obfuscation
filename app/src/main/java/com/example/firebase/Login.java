@@ -64,33 +64,31 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         }
     }
     public void signInUser(){
-        if (currentUser != null){
-            emailResponse = emailField.getText().toString();
-            passwordResponse = passwordField.getText().toString();
+        emailResponse = emailField.getText().toString();
+        passwordResponse = passwordField.getText().toString();
 
-            if (emailResponse == "")
-            {
-                Toast.makeText(getApplicationContext(), "Need to enter an email", Toast.LENGTH_SHORT).show();
+        if (emailResponse == "")
+        {
+            Toast.makeText(getApplicationContext(), "Need to enter an email", Toast.LENGTH_SHORT).show();
 
-            }else if (passwordResponse == ""){
-                Toast.makeText(getApplicationContext(), "Need to enter a password", Toast.LENGTH_SHORT).show();
+        }else if (passwordResponse == ""){
+            Toast.makeText(getApplicationContext(), "Need to enter a password", Toast.LENGTH_SHORT).show();
 
-            }else {
-                firebaseAuth.signInWithEmailAndPassword(emailResponse, passwordResponse)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    currentUser = firebaseAuth.getCurrentUser();
-                                    Toast.makeText(getApplicationContext(), "Authentication Success", Toast.LENGTH_SHORT).show();
-                                    startActivity(launchBrowser);
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Authentication Failed", Toast.LENGTH_SHORT).show();
-                                }
+        }else {
+            firebaseAuth.signInWithEmailAndPassword(emailResponse, passwordResponse)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                currentUser = firebaseAuth.getCurrentUser();
+                                Toast.makeText(getApplicationContext(), "Authentication Success", Toast.LENGTH_SHORT).show();
+                                startActivity(launchBrowser);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Authentication Failed", Toast.LENGTH_SHORT).show();
                             }
-                        });
-            }
+                        }
+                    });
         }
     }
 
